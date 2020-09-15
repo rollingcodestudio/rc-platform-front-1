@@ -8,18 +8,14 @@ import cerrar from '../image/cerrar.png';
 
 const Login = (props) => {
   const [regpass, setRegPass] = useState("");
-  const [registerClass, setRegisterClass] = useState('register');
   const [loginClass, setLoginClass] = useState('login');
   const [errorMsg, setErrorMsg] = useState("");
-  const [errorMsgReg, setErrorMsgReg] = useState("");
   const [isErrorDanger, setIsErrorDanger] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
   const [isErrorSuccess, setIsErrorSuccess] = useState(false);
-  const [isVisibleRegister, setIsVisibleRegister] = useState(false);
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
-  const [isErrorReg, setIsErrorReg] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -56,80 +52,6 @@ const Login = (props) => {
   }, [isEditing]);
 
 
-  const handleReg = async (e) => {
-
-    if (!data.email || !data.password || !data.confirmpassword) {
-      setIsSucces(false)
-      setIsVisibleRegister(true);
-      setErrorMsgReg("It is necessary to complete all the fields.");
-      setIsErrorReg(true);
-      return
-    }
-
-    if (data.confirmpassword !== data.password) {
-      setIsSucces(false);
-      setIsVisibleRegister(true);
-      setErrorMsgReg("Passwords do not match.");
-      setIsErrorReg(true);
-      return;
-    }
-
-    try {
-      const resp = await auth.createUserWithEmailAndPassword(data.email, data.password);
-      if (resp) {
-        setIsSucces(true);
-        // addAdmin();
-        await auth.signOut();
-        setErrorMsg('You registered successfully, you can now log in.')
-        setIsError(false);
-        setIsVisibleRegister(false);
-        setData({
-          email: "",
-          password: "",
-          confirmpassword: ""
-        });
-        setLoginClass('login traslationLogin');
-        setRegisterClass('register hiddenRegister');
-        setShowSignUp(true);
-        setIsVisibleLogin(true);
-        setLogin({
-          loginemail: "",
-          loginpassword: ""
-        });
-        setEditing(true)
-
-      }
-
-    } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        setIsSucces(false);
-        setIsVisibleRegister(true);
-        setErrorMsgReg("The email address is already in use by another account.");
-        setIsErrorReg(true);
-      }
-      if (error.code === "auth/invalid-email") {
-        setIsSucces(false);
-        setIsVisibleRegister(true);
-        setErrorMsgReg("The email format is not correct.");
-        setIsErrorReg(true);
-      }
-      if (error.code === "auth/invalid-password") {
-        setIsSucces(false);
-        setIsVisibleRegister(true);
-        setErrorMsgReg("Invalid password.");
-        setIsErrorReg(true);
-      }
-      if (error.code === "auth/weak-password") {
-        setIsSucces(false);
-        setIsVisibleRegister(true);
-        setErrorMsgReg("Password should be at least 6 characters.");
-        setIsErrorReg(true);
-      }
-
-    }
-  }
-
-
   const handleRegPass = async (e) => {
     try {
         const respregpass = await auth.sendPasswordResetEmail(regpass.regpass)
@@ -137,7 +59,6 @@ const Login = (props) => {
             setIsErrorSuccess(true);
             setIsErrorDanger(false);
         }
-        setRegPass( regpass === "" )
         console.log(regpass)
         console.log(respregpass)
     } catch (error) {
@@ -202,23 +123,9 @@ const Login = (props) => {
     });
   }
 
-
-  // const addAdmin = () => {
-
-  //   const addRole = functions.httpsCallable('addAdmin');
-  //   addRole({ email: data.email })
-  //     .then(res => {
-  //       console.log(res)
-  //     }).catch(err => {
-  //       console.log(err)
-  //     })
-
-  // }
-
   const handleShowSignUp = () => {
 
     setLoginClass('login traslationLoginReverse');
-    setRegisterClass('register showRegister');
     setShowSignUp(false);
     setLogin({
       loginemail: "",
