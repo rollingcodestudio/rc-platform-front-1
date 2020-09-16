@@ -4,13 +4,13 @@ import 'firebase/auth';
 import 'firebase/functions';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCV4c-Veo4dAZv0DtDCnVbhnjC1pOApxtg",
-    authDomain: "rolling-firebase.firebaseapp.com",
-    databaseURL: "https://rolling-firebase.firebaseio.com",
-    projectId: "rolling-firebase",
-    storageBucket: "rolling-firebase.appspot.com",
-    messagingSenderId: "212868670508",
-    appId: "1:212868670508:web:6a5b60809dabbc8a81dd89"
+  apiKey: "AIzaSyAQg5D7WciYfTHbjWuDmnLyrBkfW-ic1-A",
+  authDomain: "rc-platform-cd66d.firebaseapp.com",
+  databaseURL: "https://rc-platform-cd66d.firebaseio.com",
+  projectId: "rc-platform-cd66d",
+  storageBucket: "rc-platform-cd66d.appspot.com",
+  messagingSenderId: "782097918156",
+  appId: "1:782097918156:web:28c3262f6be931131dba69"
 };
 
 app.initializeApp(firebaseConfig)

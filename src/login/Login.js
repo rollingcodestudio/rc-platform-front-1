@@ -8,23 +8,19 @@ import cerrar from '../image/cerrar.png';
 
 const Login = (props) => {
   const [regpass, setRegPass] = useState("");
-  const [loginClass, setLoginClass] = useState('login');
   const [errorMsg, setErrorMsg] = useState("");
   const [isErrorDanger, setIsErrorDanger] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isErrorSuccess, setIsErrorSuccess] = useState(false);
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
-  const [isEditing, setEditing] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
     confirmpassword: ""
   });
   const [login, setLogin] = useState({
-    loginemail: "",
-    loginpassword: ""
+    email: "",
+    password: ""
   });
   const inputRef = useRef(null);
 
@@ -39,125 +35,106 @@ const Login = (props) => {
     });
     setRegPass({
       [e.target.name]: e.target.value,
-  })
-  console.log(regpass)
+    })
   }
 
 
   useEffect(() => {
 
-    if (isEditing) {
-      inputRef.current.focus();
-    }     
-  }, [isEditing]);
+    inputRef.current.focus();
+
+  }, []);
 
 
   const handleRegPass = async (e) => {
     try {
-        const respregpass = await auth.sendPasswordResetEmail(regpass.regpass)
-        if(respregpass === undefined){             
-            setIsErrorSuccess(true);
-            setIsErrorDanger(false);
-        }
-        console.log(regpass)
-        console.log(respregpass)
+      const respregpass = await auth.sendPasswordResetEmail(regpass.regpass)
+      if (respregpass === undefined) {
+        setIsErrorSuccess(true);
+        setIsErrorDanger(false);
+      }
     } catch (error) {
-        if(error.code === "auth/user-not-found"){
-            setErrorMsg("There is no user record corresponding to this identifier.");                
-            setIsErrorDanger(true);
-            setIsErrorSuccess(false);
-        }
-        console.log(error)
+      if (error.code === "auth/user-not-found") {
+        setErrorMsg("There is no user record corresponding to this identifier.");
+        setIsErrorDanger(true);
+        setIsErrorSuccess(false);
+      }
     }
-}
+  }
 
 
   const handleClick = async (e) => {
     try {
-      const resplogin = await auth.signInWithEmailAndPassword(login.loginemail.trim(), login.loginpassword.trim())
-      setLogin({
-        loginemail: "",
-        loginpassword: ""
-      })
+      const requestInfo = {
+        method: 'POST',
+        body: JSON.stringify(login),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+      };
+      const response = await fetch("https://rollingcodeschool-platform.herokuapp.com/auth/signin", requestInfo)
+      const resplogin = await response.json();
+      if (resplogin.code === "auth/successful-authentication") {
+        //   props.history.push("/admin-dashboard")
+        setLogin({
+          email: "",
+          password: ""
+        })
 
-      if (resplogin.user.uid) {
-        props.history.push("/admin-dashboard")
       }
 
-    } catch (error) {
-      if (error.code === "auth/wrong-password") {
+
+      if (resplogin.code === "auth/wrong-password") {
         setIsVisibleLogin(true)
-        setIsSucces(false);
         setErrorMsg("The password is invalid or the user does not have a password.");
         setIsError(true);
       }
-      if (error.code === "auth/invalid-password") {
+      if (resplogin.code === "auth/invalid-password") {
         setIsVisibleLogin(true)
-        setIsSucces(false);
         setErrorMsg("Invalid password.");
         setIsError(true);
       }
-      if (error.code === "auth/user-not-found") {
+      if (resplogin.code === "auth/user-not-found") {
         setIsVisibleLogin(true)
-        setIsSucces(false);
         setErrorMsg("Invalid user.");
         setIsError(true);
       }
-      if (error.code === "auth/user-not-found") {
+      if (resplogin.code === "auth/user-not-found") {
         setIsVisibleLogin(true)
-        setIsSucces(false);
         setErrorMsg("Invalid user.");
         setIsError(true);
       }
-      if (error.code === "auth/invalid-email") {
+      if (resplogin.code === "auth/invalid-email") {
         setIsVisibleLogin(true)
-        setIsSucces(false);
         setErrorMsg("Invalid user.");
         setIsError(true);
       }
 
+    } catch (error) {
+      console.log(error)
     }
-    setLogin({
-      loginemail: "",
-      loginpassword: ""
-    });
-  }
-
-  const handleShowSignUp = () => {
-
-    setLoginClass('login traslationLoginReverse');
-    setShowSignUp(false);
-    setLogin({
-      loginemail: "",
-      loginpassword: ""
-    });
-    setIsVisibleLogin(false);
   }
 
 
   return (
     <div className="containerlogin">
       <div className="d-flex justify-content-around colorcont">
-        <div className={loginClass}>
+        <div className="login">
           <h4 className="text-white mb-4">Login</h4>
           <form>
             <div class="form-group">
               <label for="exampleInputEmail1">Email</label>
-              <input type="email" class="form-control" ref={inputRef} autoComplete="off" value={login.loginemail} name="loginemail" id="loginemail" onChange={handleChange} aria-describedby="emailHelp" />
+              <input type="email" class="form-control" ref={inputRef} autoComplete="off" value={login.email} name="email" id="loginemail" onChange={handleChange} aria-describedby="emailHelp" />
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" autoComplete="off" value={login.loginpassword} name="loginpassword" onChange={handleChange} id="loginpassword" />
+              <input type="password" class="form-control" autoComplete="off" value={login.password} name="password" onChange={handleChange} id="loginpassword" />
             </div>
             <div>
-            <a href="" className="text-decoration-none" data-toggle="modal" data-target="#exampleModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
+              <a href="" className="text-decoration-none" data-toggle="modal" data-target="#exampleModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
             </div>
             {<Alert isVisible={isVisibleLogin} isError={isError} errorMsg={errorMsg} />}
             <button type="button" onClick={handleClick} class="mt-4 btn btn-outline-light btn-block">Login</button>
-            {
-              showSignUp ? <button type="button" onClick={handleShowSignUp} class="mt-3 btn btn-outline-light btn-block">Sign Up</button> : ''
-            }
-
           </form>
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="" data-dismiss="modal">
@@ -184,7 +161,7 @@ const Login = (props) => {
         <div className="barra"></div>
         <div className="logocontainer">
           <div className="d-flex justify-content-center mb-4">
-            <img src={logo} alt="" className="logo"/>
+            <img src={logo} alt="" className="logo" />
           </div>
           <div className="d-flex justify-content-center">
             <h3>CAMBIÁ TU FUTURO</h3>
