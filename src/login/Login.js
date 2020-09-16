@@ -7,35 +7,29 @@ import './login.css';
 import cerrar from '../image/cerrar.png';
 
 const Login = (props) => {
-  const [regpass, setRegPass] = useState("");
+
   const [errorMsg, setErrorMsg] = useState("");
-  const [isErrorDanger, setIsErrorDanger] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isErrorSuccess, setIsErrorSuccess] = useState(false);
-  const [isVisibleLogin, setIsVisibleLogin] = useState(false);
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-    confirmpassword: ""
-  });
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [regpass, setRegPass] = useState("");
+  const [alertRegPassVisible, setAlertRegPassVisible] = useState(false);
+  const [alertRegPassIsError, setAlertRegPassIsError] = useState(false);
+  const [alertRegPassErrorMsg, setAlertRegPassErrorMsg] = useState("");
   const [login, setLogin] = useState({
     email: "",
     password: ""
   });
+
   const inputRef = useRef(null);
 
   const handleChange = e => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-    });
+
     setLogin({
       ...login,
       [e.target.name]: e.target.value,
     });
-    setRegPass({
-      [e.target.name]: e.target.value,
-    })
+
+    setRegPass(e.target.value);
   }
 
 
@@ -47,23 +41,37 @@ const Login = (props) => {
 
 
   const handleRegPass = async (e) => {
+
+    e.preventDefault();
     try {
-      const respregpass = await auth.sendPasswordResetEmail(regpass.regpass)
+      const respregpass = await auth.sendPasswordResetEmail(regpass);
       if (respregpass === undefined) {
-        setIsErrorSuccess(true);
-        setIsErrorDanger(false);
+        setAlertRegPassErrorMsg("We send you an email so you can choose your new password");
+        setAlertRegPassIsError(false);
+        setAlertRegPassVisible(true);
       }
     } catch (error) {
       if (error.code === "auth/user-not-found") {
-        setErrorMsg("There is no user record corresponding to this identifier.");
-        setIsErrorDanger(true);
-        setIsErrorSuccess(false);
+        setAlertRegPassErrorMsg("There is no user record corresponding to this identifier.");
+        setAlertRegPassIsError(true);
+        setAlertRegPassVisible(true);
+        return;
       }
     }
   }
 
 
-  const handleClick = async (e) => {
+  const handleAuth = async (e) => {
+
+    e.preventDefault();
+
+    if (!login.email.trim() || !login.password.trim()) {
+      setErrorMsg("Enter your email and password to continue.");
+      setIsError(true);
+      setAlertVisible(true);
+      return
+    }
+
     try {
       const requestInfo = {
         method: 'POST',
@@ -76,43 +84,35 @@ const Login = (props) => {
       const resplogin = await response.json();
       console.log(resplogin)
       if (resplogin.code === "auth/successful-authentication") {
-        localStorage.setItem("idToken",JSON.stringify(resplogin.accessToken));
-        localStorage.setItem("userProfile",JSON.stringify(resplogin.userProfile));
-        props.history.push("/dashboard")
-        setLogin({
-          email: "",
-          password: ""
-        })
-
+        localStorage.setItem("idToken", JSON.stringify(resplogin.accessToken));
+        props.history.push("/dashboard");
+        return;
       }
-
-
       if (resplogin.code === "auth/wrong-password") {
-        setIsVisibleLogin(true)
         setErrorMsg("The password is invalid or the user does not have a password.");
         setIsError(true);
+        setAlertVisible(true);
+        return;
       }
       if (resplogin.code === "auth/invalid-password") {
-        setIsVisibleLogin(true)
+
+        setIsError(true);
         setErrorMsg("Invalid password.");
-        setIsError(true);
+        setAlertVisible(true);
+        return;
       }
       if (resplogin.code === "auth/user-not-found") {
-        setIsVisibleLogin(true)
-        setErrorMsg("Invalid user.");
         setIsError(true);
-      }
-      if (resplogin.code === "auth/user-not-found") {
-        setIsVisibleLogin(true)
         setErrorMsg("Invalid user.");
-        setIsError(true);
+        setAlertVisible(true);
+        return;
       }
       if (resplogin.code === "auth/invalid-email") {
-        setIsVisibleLogin(true)
-        setErrorMsg("Invalid user.");
         setIsError(true);
+        setErrorMsg("Invalid email.");
+        setAlertVisible(true);
+        return;
       }
-
     } catch (error) {
       console.log(error)
     }
@@ -124,37 +124,36 @@ const Login = (props) => {
       <div className="d-flex justify-content-around colorcont">
         <div className="login">
           <h4 className="text-white mb-4">Login</h4>
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email</label>
-              <input type="email" class="form-control" ref={inputRef} autoComplete="off" value={login.email} name="email" id="loginemail" onChange={handleChange} aria-describedby="emailHelp" />
+          <form onSubmit={handleAuth}>
+            <div className="form-group">
+              <label>Email</label>
+              <input type="email" ref={inputRef} className="form-control" autoComplete="off" value={login.email} name="email" id="loginemail" onChange={handleChange} aria-describedby="emailHelp" />
             </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" autoComplete="off" value={login.password} name="password" onChange={handleChange} id="loginpassword" />
+            <div className="form-group">
+              <label>Password</label>
+              <input type="password" className="form-control" autoComplete="off" value={login.password} name="password" onChange={handleChange} id="loginpassword" />
             </div>
             <div>
-              <a href="" className="text-decoration-none" data-toggle="modal" data-target="#exampleModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
+              <a href="#" className="text-decoration-none" data-toggle="modal" data-target="#regpassModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
             </div>
-            {<Alert isVisible={isVisibleLogin} isError={isError} errorMsg={errorMsg} />}
-            <button type="button" onClick={handleClick} class="mt-4 btn btn-outline-light btn-block">Login</button>
+            {<Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} />}
+            <button type="submit" className="mt-4 btn btn-outline-light btn-block">Login</button>
           </form>
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="" data-dismiss="modal">
+          <div className="modal fade" id="regpassModal" aria-hidden="true">
+            <div data-dismiss="modal">
               <img src={cerrar} alt="" className="cerraricon" />
             </div>
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-body">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-body">
                   <h6>Enter your email to regenerate your password.</h6>
-                  <form>
-                    <div class="form-group mt-4">
-                      <label for="exampleInputEmail1">Email</label>
-                      <input value={regpass.regpass} type="email" class="form-control" name="regpass" id="regpass" onChange={handleChange} aria-describedby="emailHelp" />
+                  <form onSubmit={handleRegPass}>
+                    <div className="form-group mt-4">
+                      <label>Email</label>
+                      <input value={regpass} type="email" className="form-control" autoComplete="off" onChange={handleChange} />
                     </div>
-                    {isErrorDanger ? <p className="text-danger fontmsg">{errorMsg}</p> : ""}
-                    {isErrorSuccess ? <p className="text-success fontmsg">We send you an email so you can choose your new password</p> : ""}
-                    <button type="button" onClick={handleRegPass} class="mt-4 btn btn-outline-light btn-block">Enviar</button>
+                    {<Alert isVisible={alertRegPassVisible} isError={alertRegPassIsError} errorMsg={alertRegPassErrorMsg} />}
+                    <button type="submit" className="mt-4 btn btn-outline-light btn-block">Enviar</button>
                   </form>
                 </div>
               </div>

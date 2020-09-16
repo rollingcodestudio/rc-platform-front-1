@@ -7,7 +7,6 @@ import Dashboard from "./dashboard/Dashboard";
 const App = () => {
   return(
     <>
-    <div className="App">
       <Router>
         <Switch>
           <Route exact path={"/"}>
@@ -18,7 +17,6 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </div>
     </>
   )
 };
