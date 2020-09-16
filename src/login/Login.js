@@ -74,7 +74,10 @@ const Login = (props) => {
       };
       const response = await fetch("https://rollingcodeschool-platform.herokuapp.com/auth/signin", requestInfo)
       const resplogin = await response.json();
+      console.log(resplogin)
       if (resplogin.code === "auth/successful-authentication") {
+        localStorage.setItem("idToken",JSON.stringify(resplogin.accessToken));
+        localStorage.setItem("userProfile",JSON.stringify(resplogin.userProfile));
         props.history.push("/dashboard")
         setLogin({
           email: "",
@@ -164,7 +167,7 @@ const Login = (props) => {
             <img src={logo} alt="" className="logo" />
           </div>
           <div className="d-flex justify-content-center">
-            <h3>CAMBIÁ TU FUTURO</h3>
+            <h3>CAMPUS ROLLING CODE</h3>
           </div>
         </div>
       </div>
