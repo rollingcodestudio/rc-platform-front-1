@@ -32,7 +32,7 @@ const App = () => {
           <Route exact path={"/"}>
             <Login />
           </Route>
-          <Route exact path={"/admin-dashboard"}>
+          <Route exact path={"/dashboard"}>
             <Dashboard />
           </Route>
         </Switch>

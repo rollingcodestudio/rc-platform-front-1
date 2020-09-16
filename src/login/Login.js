@@ -75,7 +75,7 @@ const Login = (props) => {
       const response = await fetch("https://rollingcodeschool-platform.herokuapp.com/auth/signin", requestInfo)
       const resplogin = await response.json();
       if (resplogin.code === "auth/successful-authentication") {
-        //   props.history.push("/admin-dashboard")
+        props.history.push("/dashboard")
         setLogin({
           email: "",
           password: ""
