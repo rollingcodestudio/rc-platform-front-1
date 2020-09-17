@@ -9,7 +9,7 @@ const Alert = ({isVisible, isError, errorMsg}) => {
     return (
         <>  
          { 
-        isVisible ?  <p className={isError ? errorClass : successClass}> {errorMsg}</p> : "" } 
+        isVisible ?  <p className={isError ? errorClass : successClass}>{errorMsg}</p> : "" } 
         </>
     )
 }

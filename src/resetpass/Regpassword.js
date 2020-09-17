@@ -1,9 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { auth } from "../firebase";
 import './regpassword.css';
 
 
 const Regpassword = () => {
+
+    const [code, setCode] = useState('');
+
+    useEffect(() => {
+
+        const currentURL = window.location.href;
+        const arraySrt = currentURL.split("&");
+        const code = arraySrt[1].slice(8);
+        setCode(code);
+
+    }, []);
 
     const [changepassword, setChangepassword] = useState({
         password: "",
@@ -18,12 +29,12 @@ const Regpassword = () => {
         console.log(changepassword)
     }
 
-    const handleRegpass = async (e , code) => {
+    const handleRegpass = async (e) => {
 
         e.preventDefault();
 
         try {
-            const respregpass = await auth.sendPasswordResetEmail( code , changepassword.password)
+            const respregpass = await auth.confirmPasswordReset( code , changepassword.password)
             console.log(respregpass)
         } catch (error) {
     

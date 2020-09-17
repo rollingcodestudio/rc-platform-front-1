@@ -23,12 +23,10 @@ const Login = (props) => {
   const inputRef = useRef(null);
 
   const handleChange = e => {
-
     setLogin({
       ...login,
       [e.target.name]: e.target.value,
     });
-
     setRegPass(e.target.value);
   }
 
@@ -65,57 +63,46 @@ const Login = (props) => {
 
     e.preventDefault();
 
-    if (!login.email.trim() || !login.password.trim()) {
-      setErrorMsg("Enter your email and password to continue.");
-      setIsError(true);
-      setAlertVisible(true);
-      return
-    }
-
     try {
-      const requestInfo = {
-        method: 'POST',
-        body: JSON.stringify(login),
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        }),
-      };
-      const response = await fetch("https://rollingcodeschool-platform.herokuapp.com/auth/signin", requestInfo)
-      const resplogin = await response.json();
-      console.log(resplogin)
-      if (resplogin.code === "auth/successful-authentication") {
-        localStorage.setItem("idToken", JSON.stringify(resplogin.accessToken));
-        props.history.push("/dashboard");
-        return;
+      const resplogin = await auth.signInWithEmailAndPassword(login.email.trim(), login.password.trim())
+      setLogin({
+        email: "",
+        password: ""
+      })
+
+      if (resplogin.user.uid) {
+        props.history.push("/dashboard")
       }
-      if (resplogin.code === "auth/wrong-password") {
+
+      console.log(resplogin)
+
+    } catch (error) {
+      if (error.code === "auth/wrong-password") {
         setErrorMsg("The password is invalid or the user does not have a password.");
         setIsError(true);
-        setAlertVisible(true);
-        return;
       }
-      if (resplogin.code === "auth/invalid-password") {
-
-        setIsError(true);
+      if (error.code === "auth/invalid-password") {
         setErrorMsg("Invalid password.");
-        setAlertVisible(true);
-        return;
-      }
-      if (resplogin.code === "auth/user-not-found") {
         setIsError(true);
+      }
+      if (error.code === "auth/user-not-found") {
         setErrorMsg("Invalid user.");
-        setAlertVisible(true);
-        return;
-      }
-      if (resplogin.code === "auth/invalid-email") {
         setIsError(true);
-        setErrorMsg("Invalid email.");
-        setAlertVisible(true);
-        return;
       }
-    } catch (error) {
-      console.log(error)
+      if (error.code === "auth/user-not-found") {
+        setErrorMsg("Invalid user.");
+        setIsError(true);
+      }
+      if (error.code === "auth/invalid-email") {
+        setErrorMsg("Invalid user.");
+        setIsError(true);
+      }
+      console.log(error.code)
     }
+    setLogin({
+      loginemail: "",
+      loginpassword: ""
+    });
   }
 
 
