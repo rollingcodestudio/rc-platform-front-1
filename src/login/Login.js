@@ -62,6 +62,13 @@ const Login = (props) => {
         setSpinner(false);
         return;
       }
+      if(error.code === "auth/too-many-requests"){
+        setAlertRegPassErrorMsg("Debido a reiterados intentos, por su seguridad hemos bloqueado tu solicitud. Inténtalo nuevamente mas tarde.");
+        setAlertRegPassIsError(true);
+        setAlertRegPassVisible(true);
+        setSpinner(false);
+        return;
+      }
     }
   }
 

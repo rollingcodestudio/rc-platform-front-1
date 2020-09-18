@@ -1,6 +1,7 @@
 .containerlogin{
     background-image: url(../image/pexels-mnz-1670770.jpg);
     background-size: cover;
+    background-repeat: no-repeat;
     height: 100vh;
 }
 .login {
@@ -90,9 +91,6 @@ label{
 }
 
 @media (max-width: 767px) {
-    .colorcont{ 
-        display: inline-block;
-    }
     .barra{
         display: none;
     }
@@ -111,14 +109,31 @@ label{
         background-color: #000000e0;
     }
     .colorcont{
+        display: inline-block;
+        background-color: #000000db;
         min-height: 100vh;
         height: 100%;
     }
     .containerlogin{
+        background-image: url(../image/pexels-mnz-1670770-mobile.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
         min-height: 100vh;
         height: 100%;
     }
     .textiniciar{
         text-align: center;
+    }
+    .form-control {
+        height: calc(1.8em + 5px + 0px);
+    }
+    label {
+    font-size: 15px;
+    }
+    .tamanorememberpass {
+        font-size: 15px;
+    }
+    .btn {
+        font-size: 14px;
     }
 }

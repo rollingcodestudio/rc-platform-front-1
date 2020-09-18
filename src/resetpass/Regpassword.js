@@ -3,12 +3,16 @@ import { auth } from "../firebase";
 import RCSpinner from '../components/Spinner/RCSpinner';
 import './regpassword.css';
 import cerrar from '../image/cerrar.png';
+import Alert from '../components/Alert/Alert';
 
 
 const Regpassword = () => {
 
     const [code, setCode] = useState('');
     const [spinner, setSpinner] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [isError, setIsError] = useState(false);
 
 
     useEffect(() => {
@@ -44,7 +48,18 @@ const Regpassword = () => {
             setSpinner(false);
         } catch (error) {
             console.log(error)
-            setSpinner(false);
+            if(error.code === "auth/weak-password"){
+                setErrorMsg("Su clave debe tener al menos 6 dígitos.");
+                setIsError(true);
+                setAlertVisible(true);
+                setSpinner(false);
+            }
+            if(error.code === "auth/invalid-action-code"){
+                setErrorMsg("Solicitud de clave expirada. Realice una nueva solicitud.");
+                setIsError(true);
+                setAlertVisible(true);
+                setSpinner(false);
+            }
         }
     }
 
@@ -69,6 +84,7 @@ const Regpassword = () => {
                                 <label>Confirmar contraseña:</label>
                                 <input type="password" name="confirmpassword" value={changepassword.confirmpassword} onChange={handleChange} id="confirmpassword" className="form-control" autoComplete="off" />
                             </div>
+                            {<Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} />}
                             <button type="submit" onClick={handleRegpass} className="mt-4 btn btn-outline-light btn-block">Restablecer contraseña</button>
                         </form>
                     </div>
