@@ -113,15 +113,12 @@ const Login = (props) => {
               <img src={logo} alt="" className="logo" />
             </div>
             <div className="d-flex justify-content-center">
-              <h3>CAMPUS ROLLING CODE</h3>
-            </div>
-            <div className="d-flex justify-content-center">
-              <h6 className="text-center w-75 subtitle">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, voluptate!</h6>
+              <h4 className="text-center">Bienvenidx a Campus <br/> Rolling Code</h4>
             </div>
           </div>
           {spinner || modal ? <div></div> : <div className="barra"></div>}
           <div className="login">
-            <h4 className="text-white mb-4">Login</h4>
+            <h5 className="text-white mb-4 textiniciar">Iniciar sesión</h5>
             <form onSubmit={handleAuth}>
               <div className="form-group">
                 <label>Email</label>
@@ -135,7 +132,7 @@ const Login = (props) => {
                 <a href="/#" onClick={handleModal} className="text-decoration-none" data-toggle="modal" data-target="#regpassModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
               </div>
               {<Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} />}
-              <button type="submit" className="mt-4 btn btn-outline-light btn-block">Login</button>
+              <button type="submit" className="mt-4 btn btn-outline-light btn-block">Iniciar sesión</button>
             </form>
             <div className="modal fade" data-backdrop="static" id="regpassModal" aria-hidden="true">
               {spinner ? <RCSpinner /> : ""}

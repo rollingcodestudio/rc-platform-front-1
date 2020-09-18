@@ -3,11 +3,6 @@
     background-size: cover;
     height: 100vh;
 }
-.backgroundcolor{
-    background-color: #000000a6;
-    height: 100vh;
-    position: absolute;
-}
 .login {
     width: 70vh;
     margin-top: auto;
@@ -103,6 +98,7 @@ label{
     }
     .login{
         width: 100%;
+        padding: 3rem 2.6rem;
     }
     .logocontainer{
         width: 100%;
@@ -114,7 +110,15 @@ label{
     .modal {
         background-color: #000000e0;
     }
-    .subtitle{
-        display: none;
+    .colorcont{
+        min-height: 100vh;
+        height: 100%;
+    }
+    .containerlogin{
+        min-height: 100vh;
+        height: 100%;
+    }
+    .textiniciar{
+        text-align: center;
     }
 }
