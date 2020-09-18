@@ -4,7 +4,7 @@
     height: 100vh;
 }
 .backgroundcolor{
-    background-color: #000000de;
+    background-color: #000000a6;
     height: 100vh;
     position: absolute;
 }
@@ -36,7 +36,7 @@
 }
 .colorcont{
     height: 100vh;
-    background-color: #00000087;
+    background-color: #000000a6;
 }
 .form-control{
     background-color: #fff0;
@@ -79,7 +79,7 @@ label{
     background-color: #fff0;
 }
 .modal {
-    background-color: #000000db;
+    background-color: #000000a6;
 }
 .modal-body {
     padding: 1rem 4rem;

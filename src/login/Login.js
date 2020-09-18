@@ -9,6 +9,7 @@ import cerrar from '../image/cerrar.png';
 
 const Login = (props) => {
 
+  const [modal, setModal] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [isError, setIsError] = useState(false);
@@ -29,6 +30,9 @@ const Login = (props) => {
       ...login,
       [e.target.name]: e.target.value,
     });
+  }
+
+  const handleChangeRegpass = (e) => {
     setRegPass(e.target.value);
   }
 
@@ -44,13 +48,11 @@ const Login = (props) => {
     e.preventDefault();
     
     try {
-      const respregpass = await auth.sendPasswordResetEmail(regpass);
-      if (respregpass === undefined) {
+        await auth.sendPasswordResetEmail(regpass);
         setAlertRegPassErrorMsg("We send you an email so you can choose your new password");
         setAlertRegPassIsError(false);
         setAlertRegPassVisible(true);
         setSpinner(false);
-      }
     } catch (error) {
       if (error.code === "auth/user-not-found") {
         setAlertRegPassErrorMsg("There is no user record corresponding to this identifier.");
@@ -74,7 +76,6 @@ const Login = (props) => {
         email: "",
         password: ""
       });
-
       if (resplogin.user.uid) {
         props.history.push("/dashboard");
       }
@@ -93,6 +94,14 @@ const Login = (props) => {
     setSpinner(false);
   }
 
+  const handleModal = () =>{
+    setModal(true)
+  }
+
+  const handleClosemodal = () =>{
+    setModal(false)
+  } 
+
   return (
     <>
       {spinner ? <RCSpinner /> : ""}
@@ -110,15 +119,15 @@ const Login = (props) => {
                 <input type="password" className="form-control" autoComplete="off" value={login.password} name="password" onChange={handleChange} id="loginpassword" />
               </div>
               <div>
-                <a href="/#" className="text-decoration-none" data-toggle="modal" data-target="#regpassModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
+                <a href="/#" onClick={handleModal} className="text-decoration-none" data-toggle="modal" data-target="#regpassModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
               </div>
               {<Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} />}
               <button type="submit" className="mt-4 btn btn-outline-light btn-block">Login</button>
             </form>
-            <div className="modal fade" id="regpassModal" aria-hidden="true">
+            <div className="modal fade" data-backdrop="static" id="regpassModal" aria-hidden="true">
               {spinner ? <RCSpinner /> : ""}
               <a href="/#" data-dismiss="modal">
-                <div>
+                <div onClick={handleClosemodal}>
                   <img src={cerrar} alt="" className="cerraricon" />
                 </div>
               </a>
@@ -129,7 +138,7 @@ const Login = (props) => {
                     <form onSubmit={handleRegPass}>
                       <div className="form-group mt-4">
                         <label>Email</label>
-                        <input value={regpass} type="email" className="form-control" autoComplete="off" onChange={handleChange} />
+                        <input value={regpass} type="email" className="form-control" autoComplete="off" onChange={handleChangeRegpass} />
                       </div>
                       {<Alert isVisible={alertRegPassVisible} isError={alertRegPassIsError} errorMsg={alertRegPassErrorMsg} />}
                       <button type="submit" className="mt-4 btn btn-outline-light btn-block">Enviar</button>
@@ -139,7 +148,7 @@ const Login = (props) => {
               </div>
             </div>
           </div>
-          {spinner ? <div></div> : <div className="barra"></div>}
+          {spinner || modal ? <div></div> : <div className="barra"></div>}
           <div className="logocontainer">
             <div className="d-flex justify-content-center mb-4">
               <img src={logo} alt="" className="logo" />

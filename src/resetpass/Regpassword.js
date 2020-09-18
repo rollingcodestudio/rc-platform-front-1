@@ -40,8 +40,7 @@ const Regpassword = () => {
         e.preventDefault();
 
         try {
-            const respregpass = await auth.confirmPasswordReset( code , changepassword.password)
-            console.log(respregpass)
+            await auth.confirmPasswordReset( code , changepassword.password)
             setSpinner(false);
         } catch (error) {
             console.log(error)
