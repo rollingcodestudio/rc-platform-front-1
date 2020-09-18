@@ -127,9 +127,11 @@ const Login = (props) => {
             <button type="submit" className="mt-4 btn btn-outline-light btn-block">Login</button>
           </form>
           <div className="modal fade" id="regpassModal" aria-hidden="true">
-            <div data-dismiss="modal">
-              <img src={cerrar} alt="" className="cerraricon" />
-            </div>
+            <a data-dismiss="modal">
+                <div>
+                    <img src={cerrar} alt="" className="cerraricon" />
+                </div>
+            </a>
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-body">

@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import { auth } from "../firebase";
 import './regpassword.css';
+import logo from '../image/logorolling.png';
+import cerrar from '../image/cerrar.png';
 
 
 const Regpassword = () => {
@@ -45,6 +47,11 @@ const Regpassword = () => {
     return (
         <div className="containerregpass">
             <div className="colorcont">
+                <a href="/">
+                    <div>
+                        <img src={cerrar} alt="" className="cerraricon" />
+                    </div>
+                </a>
                 <div className="centerpage">
                     <h6>Ingrese su nueva contraseña.</h6>
                     <form onSubmit={handleRegpass}>

@@ -85,9 +85,11 @@ label{
     padding: 1rem 4rem;
 }
 .cerraricon {
+    cursor: pointer;
     position: absolute;
     right: 1rem;
     top: 1rem;
+    padding: 1rem;
 }
 
 .traslationLogin {
