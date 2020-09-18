@@ -52,7 +52,7 @@ const Regpassword = () => {
         <>
             {spinner ? <RCSpinner/> : ""}
             <div className="containerregpass">
-                <div className="colorcont">
+                <div className="colorcontregpass">
                     <a href="/">
                         <div>
                             <img src={cerrar} alt="" className="cerraricon" />
