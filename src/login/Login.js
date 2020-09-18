@@ -49,13 +49,13 @@ const Login = (props) => {
     
     try {
         await auth.sendPasswordResetEmail(regpass);
-        setAlertRegPassErrorMsg("We send you an email so you can choose your new password");
+        setAlertRegPassErrorMsg("Te enviamos un correo electrónico para que elijas tu nueva contraseña");
         setAlertRegPassIsError(false);
         setAlertRegPassVisible(true);
         setSpinner(false);
     } catch (error) {
       if (error.code === "auth/user-not-found") {
-        setAlertRegPassErrorMsg("There is no user record corresponding to this identifier.");
+        setAlertRegPassErrorMsg("No encontramos ningún usuario con el correo electronico ingresado");
         setAlertRegPassIsError(true);
         setAlertRegPassVisible(true);
         setSpinner(false);
