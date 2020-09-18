@@ -114,4 +114,7 @@ label{
     .modal {
         background-color: #000000e0;
     }
+    .subtitle{
+        display: none;
+    }
 }

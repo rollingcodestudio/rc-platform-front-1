@@ -54,6 +54,7 @@ const Login = (props) => {
         setAlertRegPassVisible(true);
         setSpinner(false);
     } catch (error) {
+      console.log(error)
       if (error.code === "auth/user-not-found") {
         setAlertRegPassErrorMsg("No encontramos ningún usuario con el correo electronico ingresado");
         setAlertRegPassIsError(true);
@@ -115,7 +116,7 @@ const Login = (props) => {
               <h3>CAMPUS ROLLING CODE</h3>
             </div>
             <div className="d-flex justify-content-center">
-              <h6 className="text-center w-75">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, voluptate!</h6>
+              <h6 className="text-center w-75 subtitle">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, voluptate!</h6>
             </div>
           </div>
           {spinner || modal ? <div></div> : <div className="barra"></div>}
