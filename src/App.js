@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { auth } from './firebase';
 import "./App.css";
 import Login from "./login/Login";
 import Dashboard from "./dashboard/Dashboard";
@@ -7,7 +8,27 @@ import Regpassword from "./resetpass/Regpassword";
 import RCSpinner from "./components/Spinner/RCSpinner";
 
 const App = () => {
-  return(
+
+  const [firebaseUser, setFirebaseUser] = useState(false);
+
+  useEffect(() => {
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setTimeout(() => {
+          setFirebaseUser(user);
+        }, 1000);
+
+      } else {
+        setTimeout(() => {
+          setFirebaseUser(null);
+        }, 1000);
+      }
+    })
+
+  }, []);
+
+  return firebaseUser !== false ? (
     <>
       <Router>
         <Switch>
@@ -20,13 +41,19 @@ const App = () => {
           <Route exact path={"/regpass"}>
             <Regpassword />
           </Route>
-          <Route exact path={"/spinner"}>
-            <RCSpinner />
-          </Route>
         </Switch>
       </Router>
     </>
   )
-};
+
+    :
+
+    <RCSpinner />
+}
 
 export default App;
+
+
+
+
+

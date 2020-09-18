@@ -41,8 +41,8 @@ const Login = (props) => {
   const handleRegPass = async (e) => {
 
     setSpinner(true);
-
     e.preventDefault();
+    
     try {
       const respregpass = await auth.sendPasswordResetEmail(regpass);
       if (respregpass === undefined) {
@@ -62,7 +62,6 @@ const Login = (props) => {
     }
   }
 
-
   const handleAuth = async (e) => {
 
     setSpinner(true);
@@ -74,14 +73,14 @@ const Login = (props) => {
       setLogin({
         email: "",
         password: ""
-      })
+      });
 
       if (resplogin.user.uid) {
-      props.history.push("/dashboard")
+        props.history.push("/dashboard");
       }
       setSpinner(false);
     } catch (error) {
-      if (error.code === "auth/wrong-password" || error.code === "auth/invalid-password" || error.code === "auth/user-not-found" || error.code === "auth/user-not-found" || error.code === "auth/invalid-email") {
+      if (error.code === "auth/wrong-password" || error.code === "auth/invalid-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-email") {
         setErrorMsg("Verifique la información e intente nuevamente.");
         setIsError(true);
         setAlertVisible(true);
@@ -96,7 +95,7 @@ const Login = (props) => {
 
   return (
     <>
-      {spinner ? <RCSpinner/> : ""}
+      {spinner ? <RCSpinner /> : ""}
       <div className="containerlogin">
         <div className="d-flex justify-content-around colorcont">
           <div className="login">
@@ -117,11 +116,11 @@ const Login = (props) => {
               <button type="submit" className="mt-4 btn btn-outline-light btn-block">Login</button>
             </form>
             <div className="modal fade" id="regpassModal" aria-hidden="true">
-              {spinner ? <RCSpinner/> : ""}
+              {spinner ? <RCSpinner /> : ""}
               <a href="/#" data-dismiss="modal">
-                  <div>
-                      <img src={cerrar} alt="" className="cerraricon" />
-                  </div>
+                <div>
+                  <img src={cerrar} alt="" className="cerraricon" />
+                </div>
               </a>
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
@@ -140,7 +139,7 @@ const Login = (props) => {
               </div>
             </div>
           </div>
-          { spinner ? <div></div> : <div className="barra"></div> }
+          {spinner ? <div></div> : <div className="barra"></div>}
           <div className="logocontainer">
             <div className="d-flex justify-content-center mb-4">
               <img src={logo} alt="" className="logo" />
