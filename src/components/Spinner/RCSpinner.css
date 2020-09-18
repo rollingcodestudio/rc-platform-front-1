@@ -1,0 +1,63 @@
+.component {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner {
+  width: 5rem;
+  height: 5rem;
+  border: 3px solid transparent;
+  border-top-color: white;
+  border-bottom-color: white;
+  border-radius: 50%;
+  animation: rotation 0.8s ease infinite;
+}
+
+.rclogo-center {
+  position: relative;
+  top: -60px;
+  left: 17px;
+  margin: 0;
+  font-size: 30px;
+  font-weight: bolder;
+  color: white;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-container {
+  width: 4rem;
+  height: 4rem;
+}
+
+.alturaspinner{
+  height: 65vh;
+}
+
+.containerlogo{
+  width: 4rem; 
+  height: 4rem;
+}
+
+.positionspinner{
+  height: 100vh;
+  width: 100%;
+  background-color: #000000b7;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+}
+
+.centerspinner{
+  align-self: center;
+}

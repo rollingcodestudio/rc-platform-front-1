@@ -1,13 +1,15 @@
 import React, {useState,useEffect} from 'react';
 import { auth } from "../firebase";
+import RCSpinner from '../components/Spinner/RCSpinner';
 import './regpassword.css';
-import logo from '../image/logorolling.png';
 import cerrar from '../image/cerrar.png';
 
 
 const Regpassword = () => {
 
     const [code, setCode] = useState('');
+    const [spinner, setSpinner] = useState(false);
+
 
     useEffect(() => {
 
@@ -33,41 +35,47 @@ const Regpassword = () => {
 
     const handleRegpass = async (e) => {
 
+        setSpinner(true);
+
         e.preventDefault();
 
         try {
             const respregpass = await auth.confirmPasswordReset( code , changepassword.password)
             console.log(respregpass)
+            setSpinner(false);
         } catch (error) {
-    
             console.log(error)
+            setSpinner(false);
         }
     }
 
     return (
-        <div className="containerregpass">
-            <div className="colorcont">
-                <a href="/">
-                    <div>
-                        <img src={cerrar} alt="" className="cerraricon" />
+        <>
+            {spinner ? <RCSpinner/> : ""}
+            <div className="containerregpass">
+                <div className="colorcont">
+                    <a href="/">
+                        <div>
+                            <img src={cerrar} alt="" className="cerraricon" />
+                        </div>
+                    </a>
+                    <div className="centerpage">
+                        <h6>Ingrese su nueva contraseña.</h6>
+                        <form onSubmit={handleRegpass}>
+                            <div className="form-group mt-4">
+                                <label>Contraseña:</label>
+                                <input type="password" name="password" value={changepassword.password} onChange={handleChange} id="password" className="form-control" autoComplete="off" />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Confirmar contraseña:</label>
+                                <input type="password" name="confirmpassword" value={changepassword.confirmpassword} onChange={handleChange} id="confirmpassword" className="form-control" autoComplete="off" />
+                            </div>
+                            <button type="submit" onClick={handleRegpass} className="mt-4 btn btn-outline-light btn-block">Restablecer contraseña</button>
+                        </form>
                     </div>
-                </a>
-                <div className="centerpage">
-                    <h6>Ingrese su nueva contraseña.</h6>
-                    <form onSubmit={handleRegpass}>
-                        <div className="form-group mt-4">
-                            <label>Contraseña:</label>
-                            <input type="password" name="password" value={changepassword.password} onChange={handleChange} id="password" className="form-control" autoComplete="off" />
-                        </div>
-                        <div className="form-group mt-4">
-                            <label>Confirmar contraseña:</label>
-                            <input type="password" name="confirmpassword" value={changepassword.confirmpassword} onChange={handleChange} id="confirmpassword" className="form-control" autoComplete="off" />
-                        </div>
-                        <button type="submit" onClick={handleRegpass} className="mt-4 btn btn-outline-light btn-block">Restablecer contraseña</button>
-                    </form>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
