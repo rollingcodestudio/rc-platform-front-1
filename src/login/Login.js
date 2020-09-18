@@ -106,7 +106,19 @@ const Login = (props) => {
     <>
       {spinner ? <RCSpinner /> : ""}
       <div className="containerlogin">
-        <div className="d-flex justify-content-around colorcont">
+        <div className="colorcont">
+          <div className="logocontainer">
+            <div className="d-flex justify-content-center mb-4">
+              <img src={logo} alt="" className="logo" />
+            </div>
+            <div className="d-flex justify-content-center">
+              <h3>CAMPUS ROLLING CODE</h3>
+            </div>
+            <div className="d-flex justify-content-center">
+              <h6 className="text-center w-75">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, voluptate!</h6>
+            </div>
+          </div>
+          {spinner || modal ? <div></div> : <div className="barra"></div>}
           <div className="login">
             <h4 className="text-white mb-4">Login</h4>
             <form onSubmit={handleAuth}>
@@ -146,15 +158,6 @@ const Login = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          {spinner || modal ? <div></div> : <div className="barra"></div>}
-          <div className="logocontainer">
-            <div className="d-flex justify-content-center mb-4">
-              <img src={logo} alt="" className="logo" />
-            </div>
-            <div className="d-flex justify-content-center">
-              <h3>CAMPUS ROLLING CODE</h3>
             </div>
           </div>
         </div>

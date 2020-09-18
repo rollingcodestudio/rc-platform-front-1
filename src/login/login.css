@@ -12,7 +12,7 @@
     width: 70vh;
     margin-top: auto;
     margin-bottom: auto;
-    padding: 3rem 5rem;
+    padding: 3rem 3rem;
 }
 .logocontainer{
     align-self: center;
@@ -35,6 +35,8 @@
     border: 1px white solid;
 }
 .colorcont{
+    display: flex;
+    justify-content: space-around;
     height: 100vh;
     background-color: #000000b8;
 }
@@ -92,44 +94,24 @@ label{
     padding: 1rem;
 }
 
-.traslationLogin {
-    transform: translateX(-758px);
-    transition: 2s;
-}
-
-.hiddenRegister {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 1s, opacity 0.5s linear;
-}
-
-.traslationLoginReverse {
-    transform: translateX(0px);
-    transition: 2s;
-}
-
-.showRegister {
-    opacity: 1;
-    transition: visibility 1s, opacity 0.5s linear;
-}
-
-.traslationLogin {
-    transform: translateX(-758px);
-    transition: 2s;
-}
-
-.hiddenRegister {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 1s, opacity 0.5s linear;
-}
-
-.traslationLoginReverse {
-    transform: translateX(0px);
-    transition: 2s;
-}
-
-.showRegister {
-    opacity: 1;
-    transition: visibility 1s, opacity 0.5s linear;
+@media (max-width: 767px) {
+    .colorcont{ 
+        display: inline-block;
+    }
+    .barra{
+        display: none;
+    }
+    .login{
+        width: 100%;
+    }
+    .logocontainer{
+        width: 100%;
+        margin-top: 5vh;
+    }
+    .modal-body {
+        padding: 1rem 2.5rem;
+    }
+    .modal {
+        background-color: #000000e0;
+    }
 }
