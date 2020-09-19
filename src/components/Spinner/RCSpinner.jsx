@@ -1,15 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import "./RCSpinner.css";
 
-export default class LoadingScreen extends Component {
-  render() {
+ const LoadingScreen = () => {
     return (
       <div className="positionspinner">
         <div className="centerspinner">
-          <div class="spinner"></div>
-          <p class="m-0 p-0 strong rclogo-center">{"< >"}</p>
+          <div className="spinner"></div>
+          <div className="d-flex">
+          <span class="strong rclogo-center mr-2">{"<"}</span>
+          <span class="strong rclogo-center">{">"}</span>
+          </div>
         </div>
       </div>
     );
-  }
 }
+
+export default LoadingScreen
+

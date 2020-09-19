@@ -7,6 +7,7 @@ import RCSpinner from '../components/Spinner/RCSpinner';
 import './login.css';
 import cerrar from '../image/cerrar.png';
 
+
 const Login = (props) => {
 
   const [modal, setModal] = useState(false);
@@ -22,8 +23,26 @@ const Login = (props) => {
     email: "",
     password: ""
   });
-
   const inputRef = useRef(null);
+
+  useEffect(() => {
+
+    inputRef.current.focus();
+
+  }, []);
+
+  const scrollDown = (h = window.pageYOffset) => {
+
+    let i = h || 0;
+    if (i < 110) {
+      setTimeout(() => {
+        window.scrollTo(0, i);
+        scrollDown(i + 1);
+      }, 3);
+    }
+
+  }
+
 
   const handleChange = e => {
     setLogin({
@@ -36,23 +55,18 @@ const Login = (props) => {
     setRegPass(e.target.value);
   }
 
-  useEffect(() => {
-
-    inputRef.current.focus();
-
-  }, []);
 
   const handleRegPass = async (e) => {
 
     setSpinner(true);
     e.preventDefault();
-    
+
     try {
-        await auth.sendPasswordResetEmail(regpass);
-        setAlertRegPassErrorMsg("Te enviamos un correo electrónico para que elijas tu nueva contraseña");
-        setAlertRegPassIsError(false);
-        setAlertRegPassVisible(true);
-        setSpinner(false);
+      await auth.sendPasswordResetEmail(regpass);
+      setAlertRegPassErrorMsg("Te enviamos un correo electrónico para que elijas tu nueva contraseña");
+      setAlertRegPassIsError(false);
+      setAlertRegPassVisible(true);
+      setSpinner(false);
     } catch (error) {
       console.log(error)
       if (error.code === "auth/user-not-found") {
@@ -62,7 +76,7 @@ const Login = (props) => {
         setSpinner(false);
         return;
       }
-      if(error.code === "auth/too-many-requests"){
+      if (error.code === "auth/too-many-requests") {
         setAlertRegPassErrorMsg("Debido a reiterados intentos, por su seguridad hemos bloqueado tu solicitud. Inténtalo nuevamente mas tarde.");
         setAlertRegPassIsError(true);
         setAlertRegPassVisible(true);
@@ -93,6 +107,7 @@ const Login = (props) => {
         setErrorMsg("Verifique la información e intente nuevamente.");
         setIsError(true);
         setAlertVisible(true);
+        scrollDown();
       }
     }
     setLogin({
@@ -102,29 +117,29 @@ const Login = (props) => {
     setSpinner(false);
   }
 
-  const handleModal = () =>{
+  const handleModal = () => {
     setModal(true)
   }
 
-  const handleClosemodal = () =>{
+  const handleClosemodal = () => {
     setModal(false)
-  } 
+  }
 
   return (
     <>
       {spinner ? <RCSpinner /> : ""}
       <div className="containerlogin">
-        <div className="colorcont">
-          <div className="logocontainer">
+        <div className="colorcont d-block d-md-flex">
+          <div className="logocontainer ">
             <div className="d-flex justify-content-center mb-4">
               <img src={logo} alt="" className="logo" />
             </div>
             <div className="d-flex justify-content-center">
-              <h4 className="text-center">Bienvenidx a Campus <br/> Rolling Code</h4>
+              <h4 className="text-center">Bienvenidx a Campus <br /> Rolling Code</h4>
             </div>
           </div>
           {spinner || modal ? <div></div> : <div className="barra"></div>}
-          <div className="login">
+          <div className="login ">
             <h5 className="text-white mb-4 textiniciar">Iniciar sesión</h5>
             <form onSubmit={handleAuth}>
               <div className="form-group">
