@@ -17,12 +17,12 @@ const App = () => {
       if (user) {
         setTimeout(() => {
           setFirebaseUser(user);
-        }, 1000);
+        }, 2000);
 
       } else {
         setTimeout(() => {
           setFirebaseUser(null);
-        }, 1000);
+        }, 2000);
       }
     })
 
