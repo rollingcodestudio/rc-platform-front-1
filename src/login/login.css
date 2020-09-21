@@ -3,7 +3,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
-}
+} 
 .login {
     width: 70vh;
     margin-top: auto;
@@ -34,7 +34,6 @@
     display: flex;
     justify-content: space-around;
     height: 100vh;
-    background-color: #000000b8;
 }
 .form-control{
     background-color: #fff0;
@@ -109,7 +108,6 @@ label{
         background-color: #000000e0;
     }
     .colorcont{
-        background-color: #000000d1;
         min-height: 100vh;
         height: 100%;
     }
