@@ -1,5 +1,5 @@
 .containerlogin{
-    background-image: url(../image/pexels-mnz-1670770.jpg);
+    background-image: url(../image/pexels-mnz-1670770.webp);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -112,7 +112,7 @@ label{
         height: 100%;
     }
     .containerlogin{
-        background-image: url(../image/pexels-mnz-1670770-mobile.jpg);
+        background-image: url(../image/pexels-mnz-1670770-mobile.webp);
         background-size: cover;
         background-repeat: no-repeat;
         min-height: 100vh;

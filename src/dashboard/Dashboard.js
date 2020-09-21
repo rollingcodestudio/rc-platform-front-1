@@ -14,10 +14,22 @@ const Dashboard = (props) => {
     }
   }, []);
 
+  const handleSignout = async (e) =>{
+    e.preventDefault()
+    try {
+      await auth.signOut()
+      props.history.push("/")
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
       <div className="altodiv">
+        <div className="d-flex justify-content-center">
+          <button type="button" onClick={handleSignout} className="my-4 w-25 btn btn-outline-dark btn-block">Cerrar sesión</button>
+        </div>
         <div className="d-flex justify-content-center">
           <img src={construccion} alt="" className="w-50" />
         </div>
