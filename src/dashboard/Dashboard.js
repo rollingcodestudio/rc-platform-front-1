@@ -12,7 +12,7 @@ const Dashboard = (props) => {
     } else {
       props.history.push("/")
     }
-  }, []);
+  }, [props.history]);
 
   const handleSignout = async (e) =>{
     e.preventDefault()

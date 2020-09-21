@@ -7,8 +7,8 @@ import "./RCSpinner.css";
         <div className="centerspinner">
           <div className="spinner"></div>
           <div className="d-flex">
-          <span class="strong rclogo-center mr-2">{"<"}</span>
-          <span class="strong rclogo-center">{">"}</span>
+          <span className="strong rclogo-center mr-2">{"<"}</span>
+          <span className="strong rclogo-center">{">"}</span>
           </div>
         </div>
       </div>
