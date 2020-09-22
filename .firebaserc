@@ -1,6 +1,6 @@
 {
   "projects": {
     "default": "rc-platform-cd66d",
-    "staging": "permisos-69dab"
+    "staging": "rc-platform-staging"
   }
 }
