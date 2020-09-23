@@ -7,6 +7,7 @@ import logo from '../../image/logorolling.png';
 import RCSpinner from '../../components/Spinner/RCSpinner';
 import './login.css';
 import cerrar from '../../image/cerrar.png';
+import face from '../../image/facebook.png';
 
 
 const Login = (props) => {
@@ -186,7 +187,7 @@ const Login = (props) => {
               </div>
               { <Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} /> }
               <button type="submit" className="mt-4 btn btn-outline-light btn-block">Iniciar sesión</button>
-              <button type="button" onClick={handleSigninwithface} className="mt-4 btn btn-outline-light btn-block">Iniciar sesión con Facebook</button>
+              <button type="button" onClick={handleSigninwithface} className="mt-3 btn btn-info btn-block"><img className="positionface" src={face} alt=""/> Iniciar sesión con Facebook</button>
             </form>
             <div className="modal fade" data-backdrop="static" id="regpassModal" aria-hidden="true">
               <a href="/#" data-dismiss="modal">

@@ -24,11 +24,26 @@
     margin-bottom: auto;
     padding: 3rem 5rem;
 }
+.btn-info:hover {
+    color: #fff;
+    background-color: #3b5998;
+    border-color: white !important;
+}
+.btn-info {
+    color: #fff;
+    background-color: #3b5998;
+    border-color: #3b5998 !important;
+}
 .barra{
     margin-top: auto;
     margin-bottom: auto;
     height: 50vh;
     border: 1px white solid;
+}
+.positionface{
+    top: -2px;
+    position: relative;
+    right: 5px;
 }
 .colorcont{
     display: flex;
