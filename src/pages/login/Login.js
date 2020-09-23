@@ -142,10 +142,11 @@ const Login = (props) => {
 
   const handleSigninwithface = async (e) => {
     e.preventDefault()
-    var provider = new firebase.auth.FacebookAuthProvider();
-    console.log(provider)
-    
+
     try {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      console.log(provider)
+      
       const resplogin = await auth.signInWithPopup(provider)
       console.log(resplogin)
       if (resplogin.user.uid) {
