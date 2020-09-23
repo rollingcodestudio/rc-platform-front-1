@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "rc-platform-cd66d",
-    "staging": "rc-platform-staging"
+    "staging": "rc-platform-staging",
+    "dev": "rc-platform-dev"
   }
 }

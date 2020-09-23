@@ -1,9 +1,9 @@
 import React, {useState,useEffect} from 'react';
-import { auth } from "../firebase";
-import RCSpinner from '../components/Spinner/RCSpinner';
+import { auth } from "../../firebase";
+import RCSpinner from '../../components/Spinner/RCSpinner';
 import './regpassword.css';
-import cerrar from '../image/cerrar.png';
-import Alert from '../components/Alert/Alert';
+import cerrar from '../../image/cerrar.png';
+import Alert from '../../components/Alert/Alert';
 
 
 const Regpassword = () => {
