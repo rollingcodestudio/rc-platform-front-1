@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
+import firebase from 'firebase/app'
 import { auth } from "../../firebase";
 import Alert from '../../components/Alert/Alert';
 import logo from '../../image/logorolling.png';
@@ -138,6 +139,23 @@ const Login = (props) => {
   }
 
 
+  const handleSigninwithface = async (e) => {
+    e.preventDefault()
+    var provider = new firebase.auth.FacebookAuthProvider();
+    console.log(provider)
+    
+    try {
+      const resplogin = await auth.signInWithPopup(provider)
+      console.log(resplogin)
+      if (resplogin.user.uid) {
+        props.history.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   return (
     <>
       <div className="containerlogin">
@@ -168,6 +186,7 @@ const Login = (props) => {
               </div>
               { <Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} /> }
               <button type="submit" className="mt-4 btn btn-outline-light btn-block">Iniciar sesión</button>
+              <button type="button" onClick={handleSigninwithface} className="mt-4 btn btn-outline-light btn-block">Iniciar sesión con Facebook</button>
             </form>
             <div className="modal fade" data-backdrop="static" id="regpassModal" aria-hidden="true">
               <a href="/#" data-dismiss="modal">
