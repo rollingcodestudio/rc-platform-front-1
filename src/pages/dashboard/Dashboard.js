@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { withRouter } from 'react-router-dom';
-import construccion from '../image/undraw_under_construction_46pa.svg'
+import construccion from '../../image/undraw_under_construction_46pa.svg'
 import './dashboard.css'
 
 const Dashboard = (props) => {

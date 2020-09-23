@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { auth } from './firebase';
 import "./App.css";
-import Login from "./login/Login";
-import Dashboard from "./dashboard/Dashboard";
-import Regpassword from "./resetpass/Regpassword";
+import Login from "./pages/login/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Regpassword from "./pages/resetpass/Regpassword";
 import RCSpinner from "./components/Spinner/RCSpinner";
 
 const App = () => {

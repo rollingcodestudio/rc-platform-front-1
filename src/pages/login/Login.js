@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
-import { auth } from "../firebase";
-import Alert from '../components/Alert/Alert';
-import logo from '../image/logorolling.png';
-import RCSpinner from '../components/Spinner/RCSpinner';
+import { auth } from "../../firebase";
+import Alert from '../../components/Alert/Alert';
+import logo from '../../image/logorolling.png';
+import RCSpinner from '../../components/Spinner/RCSpinner';
 import './login.css';
-import cerrar from '../image/cerrar.png';
+import cerrar from '../../image/cerrar.png';
 
 
 const Login = (props) => {
