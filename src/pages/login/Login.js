@@ -12,6 +12,7 @@ import face from '../../image/facebook.png';
 const Login = (props) => {
 
   const [modal, setModal] = useState(false);
+  const [registerClass, setRegisterClass] = useState('register');
   const [isSucces, setIsSucces] = useState(false);
   const [isVisibleRegister, setIsVisibleRegister] = useState(false);
   const [isErrorReg, setIsErrorReg] = useState(false);
@@ -243,7 +244,7 @@ const Login = (props) => {
       <div className="containerlogin">
         <div className="colorcont d-block d-md-flex">
         { spinner ? <RCSpinner /> : "" }
-          <div>
+          <div className={registerClass}>
             <h5 className="text-white mb-4">Registro</h5>
             <form>
               <div className="form-group">
