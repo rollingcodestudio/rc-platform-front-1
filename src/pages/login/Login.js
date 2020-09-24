@@ -7,6 +7,7 @@ import RCSpinner from '../../components/Spinner/RCSpinner';
 import './login.css';
 import cerrar from '../../image/cerrar.png';
 import face from '../../image/facebook.png';
+import logo from '../../image/logorolling.png';
 
 
 const Login = (props) => {
@@ -24,26 +25,26 @@ const Login = (props) => {
   const [regpass, setRegPass] = useState("");
   const [alertRegPassVisible, setAlertRegPassVisible] = useState(false);
   const [alertRegPassIsError, setAlertRegPassIsError] = useState(false);
+  const [isregister, setIsregister] = useState(true);
   const inputEmailRef = useRef(null);
   const [alertRegPassErrorMsg, setAlertRegPassErrorMsg] = useState("");
   const [login, setLogin] = useState({
     email: "",
     password: ""
   });
-  const [data, setData] = useState({
+    const [data, setData] = useState({
     email: "",
     password: "",
     confirmpassword: ""
   });
- 
 
-
+  /*
   useEffect(() => {
 
     inputEmailRef.current.focus();
 
   }, []);
-
+  */
 
   const handleChangeAuth = e => {
     setLogin({
@@ -97,6 +98,8 @@ const Login = (props) => {
 
   const handleReg = async (e) => {
 
+    e.preventDefault()
+
     if (!data.email || !data.password || !data.confirmpassword) {
       setIsSucces(false)
       setIsVisibleRegister(true);
@@ -118,7 +121,6 @@ const Login = (props) => {
       if (resp) {
         setIsSucces(true);
         // addAdmin();
-        await auth.signOut();
         setErrorMsg('You registered successfully, you can now log in.')
         setIsError(false);
         setIsVisibleRegister(false);
@@ -238,33 +240,26 @@ const Login = (props) => {
     }
   }
 
+  const handleSignup = () =>{
+    setIsregister(false)
+  }
+
+  const handleSignin = () =>{
+    setIsregister(true)
+  }
+
 
   return (
     <>
       <div className="containerlogin">
         <div className="colorcont d-block d-md-flex">
         { spinner ? <RCSpinner /> : "" }
-          <div className={registerClass}>
-            <h5 className="text-white mb-4">Registro</h5>
-            <form>
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email</label>
-                <input type="email" value={data.email} className="form-control" autoComplete="off" onChange={handleChange} name="email" id="email" aria-describedby="emailHelp" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Contraseña</label>
-                <input type="password" value={data.password} className="form-control" autoComplete="off" onChange={handleChange} name="password" id="password" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Confirmar contraseña</label>
-                <input type="password" value={data.confirmpassword} className="form-control" autoComplete="off" onChange={handleChange} name="confirmpassword" id="confirmpassword" />
-              </div>
-              {isSucces ? '' : <Alert isVisible={isVisibleRegister} isError={isErrorReg} errorMsg={errorMsgReg} />}
-              <button type="button" className="mt-4 btn btn-outline-light btn-block" onClick={handleReg}>Registrarme</button>
-            </form>
+          <div className="d-flex justify-content-center col-lg-4 col-md-6 col-sm-12">
+            <img src={logo} alt="" className="h-25 positionlogo"/>
           </div>
           { spinner || modal ? <div></div> : <div className="barra"></div> }
-          <div className="login ">
+          { isregister ? 
+          <div className="login col-lg-4 col-md-6 col-sm-12">
             <h5 className="text-white mb-4 textiniciar">Iniciar sesión</h5>
             <form onSubmit={ handleAuth }>
               <div className="form-group">
@@ -281,6 +276,9 @@ const Login = (props) => {
               { <Alert isVisible={alertVisible} isError={isError} errorMsg={errorMsg} /> }
               <button type="submit" className="mt-4 btn btn-outline-light btn-block">Iniciar sesión</button>
               <button type="button" onClick={handleSigninwithface} className="mt-3 btn btn-info btn-block"><img className="positionface" src={face} alt=""/> Iniciar sesión con Facebook</button>
+              <div>
+                <a href="/#" onClick={handleSignup} className="text-decoration-none"><p className="tamanorememberpass">¿Necesitas una cuenta? Regístrate ahora</p></a>
+              </div>
             </form>
             <div className="modal fade" data-backdrop="static" id="regpassModal" aria-hidden="true">
               <a href="/#" data-dismiss="modal">
@@ -305,6 +303,30 @@ const Login = (props) => {
               </div>
             </div>
           </div>
+          : 
+          <div className="col-lg-4 col-md-6 col-sm-12 register">
+            <h5 className="text-white mb-4">Registro</h5>
+            <form>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email</label>
+                <input type="email" value={data.email} className="form-control" autoComplete="off" onChange={handleChange} name="email" id="email" aria-describedby="emailHelp" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Contraseña</label>
+                <input type="password" value={data.password} className="form-control" autoComplete="off" onChange={handleChange} name="password" id="password" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Confirmar contraseña</label>
+                <input type="password" value={data.confirmpassword} className="form-control" autoComplete="off" onChange={handleChange} name="confirmpassword" id="confirmpassword" />
+              </div>
+              {isSucces ? '' : <Alert isVisible={isVisibleRegister} isError={isErrorReg} errorMsg={errorMsgReg} />}
+              <button type="button" className="mt-4 btn btn-outline-light btn-block" onClick={handleReg}>Registrarme</button>
+              <div>
+                <a href="/#" onClick={handleSignin} className="text-decoration-none"><p className="tamanorememberpass">¿Ya tenes tu cuenta? Inicia sesión.</p></a>
+              </div>
+            </form>
+          </div>
+          }
         </div>
       </div>
     </>

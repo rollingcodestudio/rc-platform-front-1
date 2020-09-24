@@ -10,19 +10,14 @@
     margin-bottom: auto;
     padding: 3rem 3rem;
 }
-.logocontainer{
-    align-self: center;
-    justify-content: center;
-    width: 33%;
-}
-.logo{
-    width: 33%;
-}
 .register{
     width: 70vh;
     margin-top: auto;
     margin-bottom: auto;
     padding: 3rem 3rem;
+}
+.positionlogo{
+    align-self: center;
 }
 .btn-info:hover {
     color: #fff;
@@ -112,6 +107,10 @@ label{
         width: 100%;
         padding: 3rem 2.6rem;
     }
+    .register{
+        width: 100%;
+        padding: 3rem 2.6rem;
+    }
     .logocontainer{
         width: 100%;
         padding-top: 1.4rem;
@@ -134,14 +133,14 @@ label{
         max-height: 100%;
         height: 100%;
     }
-    .textiniciar{
-        text-align: center;
-    }
     .form-control {
         height: calc(1.8em + 5px + 0px);
     }
     label {
     font-size: 15px;
+    }
+    .positionlogo{
+        display: none;
     }
     .tamanorememberpass {
         font-size: 15px;
@@ -152,9 +151,7 @@ label{
 }
 
 @media (min-width: 768px) and (max-width: 1024px) { 
-  
     .logocontainer {
         width: 80%;
     }
-
  }
