@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app'
 import { auth } from "../../firebase";
 import Alert from '../../components/Alert/Alert';
-import logo from '../../image/logorolling.png';
 import RCSpinner from '../../components/Spinner/RCSpinner';
 import './login.css';
 import cerrar from '../../image/cerrar.png';
@@ -13,7 +12,11 @@ import face from '../../image/facebook.png';
 const Login = (props) => {
 
   const [modal, setModal] = useState(false);
-  const [spinner, setSpinner] = useState(false);
+  const [isSucces, setIsSucces] = useState(false);
+  const [isVisibleRegister, setIsVisibleRegister] = useState(false);
+  const [isErrorReg, setIsErrorReg] = useState(false);
+  const [errorMsgReg, setErrorMsgReg] = useState("");
+  const [spinner, setSpinner] = useState(false); 
   const [errorMsg, setErrorMsg] = useState("");
   const [isError, setIsError] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
@@ -25,6 +28,11 @@ const Login = (props) => {
   const [login, setLogin] = useState({
     email: "",
     password: ""
+  });
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    confirmpassword: ""
   });
  
 
@@ -76,6 +84,79 @@ const Login = (props) => {
         setSpinner(false);
         return;
       }
+    }
+  }
+
+  const handleChange = e => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  const handleReg = async (e) => {
+
+    if (!data.email || !data.password || !data.confirmpassword) {
+      setIsSucces(false)
+      setIsVisibleRegister(true);
+      setErrorMsgReg("It is necessary to complete all the fields.");
+      setIsErrorReg(true);
+      return
+    }
+
+    if (data.confirmpassword !== data.password) {
+      setIsSucces(false);
+      setIsVisibleRegister(true);
+      setErrorMsgReg("Passwords do not match.");
+      setIsErrorReg(true);
+      return;
+    }
+
+    try {
+      const resp = await auth.createUserWithEmailAndPassword(data.email, data.password);
+      if (resp) {
+        setIsSucces(true);
+        // addAdmin();
+        await auth.signOut();
+        setErrorMsg('You registered successfully, you can now log in.')
+        setIsError(false);
+        setIsVisibleRegister(false);
+        setData({
+          email: "",
+          password: "",
+          confirmpassword: ""
+        });
+        setLogin({
+          loginemail: "",
+          loginpassword: ""
+        });
+      }
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        setIsSucces(false);
+        setIsVisibleRegister(true);
+        setErrorMsgReg("The email address is already in use by another account.");
+        setIsErrorReg(true);
+      }
+      if (error.code === "auth/invalid-email") {
+        setIsSucces(false);
+        setIsVisibleRegister(true);
+        setErrorMsgReg("The email format is not correct.");
+        setIsErrorReg(true);
+      }
+      if (error.code === "auth/invalid-password") {
+        setIsSucces(false);
+        setIsVisibleRegister(true);
+        setErrorMsgReg("Invalid password.");
+        setIsErrorReg(true);
+      }
+      if (error.code === "auth/weak-password") {
+        setIsSucces(false);
+        setIsVisibleRegister(true);
+        setErrorMsgReg("Password should be at least 6 characters.");
+        setIsErrorReg(true);
+      }
+
     }
   }
 
@@ -142,11 +223,10 @@ const Login = (props) => {
 
   const handleSigninwithface = async (e) => {
     e.preventDefault()
-
+    const provider = new firebase.auth.FacebookAuthProvider();
+    console.log(provider)
+    
     try {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      console.log(provider)
-      
       const resplogin = await auth.signInWithPopup(provider)
       console.log(resplogin)
       if (resplogin.user.uid) {
@@ -163,13 +243,24 @@ const Login = (props) => {
       <div className="containerlogin">
         <div className="colorcont d-block d-md-flex">
         { spinner ? <RCSpinner /> : "" }
-          <div className="logocontainer">
-            <div className="d-flex justify-content-center mb-4">
-              <img src={logo} alt="" className="logo" />
-            </div>
-            <div className="d-flex justify-content-center">
-              <h4 className="text-center">Bienvenidx a Campus <br /> Rolling Code</h4>
-            </div>
+          <div>
+            <h5 className="text-white mb-4">Registro</h5>
+            <form>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email</label>
+                <input type="email" value={data.email} className="form-control" autoComplete="off" onChange={handleChange} name="email" id="email" aria-describedby="emailHelp" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Contraseña</label>
+                <input type="password" value={data.password} className="form-control" autoComplete="off" onChange={handleChange} name="password" id="password" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Confirmar contraseña</label>
+                <input type="password" value={data.confirmpassword} className="form-control" autoComplete="off" onChange={handleChange} name="confirmpassword" id="confirmpassword" />
+              </div>
+              {isSucces ? '' : <Alert isVisible={isVisibleRegister} isError={isErrorReg} errorMsg={errorMsgReg} />}
+              <button type="button" className="mt-4 btn btn-outline-light btn-block" onClick={handleReg}>Registrarme</button>
+            </form>
           </div>
           { spinner || modal ? <div></div> : <div className="barra"></div> }
           <div className="login ">
@@ -180,7 +271,7 @@ const Login = (props) => {
                 <input type="email" ref={inputEmailRef} className="form-control" autoComplete="off" value={login.email} name="email" onChange={handleChangeAuth} aria-describedby="emailHelp" />
               </div>
               <div className="form-group">
-                <label>Password</label>
+                <label>Contraseña</label>
                 <input type="password" className="form-control" autoComplete="off" value={login.password} name="password" onChange={handleChangeAuth} />
               </div>
               <div>
