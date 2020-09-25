@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
 import RCSpinner from '../../components/Spinner/RCSpinner';
-import './login.css';
+import './authentication.css';
 import logo from '../../image/logorolling.png';
 import SignIn from '../../components/SingIn/SignIn';
 import SignUp from '../../components/SignUp/SignUp';
 
 
-const Login = () => {
+const Authentication = () => {
 
   const [modal, setModal] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [isregister, setIsregister] = useState(false);
 
-  const handleHiddenDivider = (isActive) => {
-    setModal(isActive)
-  }
+  const handleHiddenDivider = (isActive) => setModal(isActive)
 
-  const handleAuthentication = (isRegister) => {
-    setIsregister(isRegister)
-  }
+  const handleSwitchAuth = (isRegister) => setIsregister(isRegister);
+  
+  const handleSpinner = (isSpinner) => setSpinner(isSpinner)
 
-  const handleSpinner = (isSpinner) => {
-    setSpinner(isSpinner)
-  }
 
   return (
     <>
@@ -34,9 +29,9 @@ const Login = () => {
           </div>
           { spinner || modal ? <div></div> : <div className="barra"></div> }
           { isregister ? 
-          <SignUp handleAuthentication={handleAuthentication} handleSpinner={handleSpinner}/>
+          <SignUp handleSwitchAuth={handleSwitchAuth} handleSpinner={handleSpinner}/>
           : 
-          <SignIn handleAuthentication={handleAuthentication} handleSpinner={handleSpinner} handleHiddenDivider={handleHiddenDivider} modalState={modal}/>
+          <SignIn handleSwitchAuth={handleSwitchAuth} handleSpinner={handleSpinner} handleHiddenDivider={handleHiddenDivider} modalState={modal}/>
           }
         </div>
       </div>
@@ -44,4 +39,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Authentication;
